@@ -5,13 +5,13 @@ import (
 	"time"
 )
 
-// BindArticleStore bind the ArticleForm entity in the Article entity
-func BindArticleStore(articleForm *models.ArticleStore) (models.Article, error) {
+// BindArticleStore bind the ArticleStore entity in the Article entity
+func BindArticleStore(articleStore *models.ArticleStore) (models.Article, error) {
 
 	article := models.Article{
-		AuthorID:  articleForm.AuthorID,
-		Title:     articleForm.Title,
-		Content:   articleForm.Content,
+		AuthorID:  articleStore.AuthorID,
+		Title:     articleStore.Title,
+		Content:   articleStore.Content,
 		CreatedAt: time.Now(),
 	}
 
