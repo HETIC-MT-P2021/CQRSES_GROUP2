@@ -6,15 +6,15 @@ import (
 
 // Article defines the structure of the article entity
 type Article struct {
-	AuthorID  uint64
-	Title     string
-	Content   string
-	CreatedAt time.Time
+	AuthorID  uint      `form:"author_id"`
+	Title     string    `form:"title"`
+	Content   string    `form:"content"`
+	CreatedAt time.Time `form:"created_at"`
 }
 
 // ArticleStore defines the structure of the article entity for the create command
 type ArticleStore struct {
-	AuthorID uint64
-	Title    string
-	Content  string
+	AuthorID uint   `form:"author_id"`
+	Title    string `form:"title"`
+	Content  string `form:"content"`
 }

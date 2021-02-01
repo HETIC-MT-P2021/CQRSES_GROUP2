@@ -6,14 +6,17 @@ import (
 	"cqrses/models"
 	"net/http"
 
-	"github.com/dgrijalva/jwt-go"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/labstack/echo/v4"
 )
 
 // CreateArticle create an article
 func CreateArticle(c echo.Context) error {
-	articleStore := models.ArticleStore{}
+	var articleStore models.ArticleStore
+
+	if err := c.Bind(&articleStore); err != nil {
+		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
+	}
 
 	if err := validation.ValidateStruct(&articleStore,
 		validation.Field(&articleStore.Title, validation.Required),
@@ -22,11 +25,10 @@ func CreateArticle(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	id := claims["id"].(uint64)
+	// user := c.Get("user").(*jwt.Token)
+	// claims := user.Claims.(jwt.MapClaims)
 
-	articleStore.AuthorID = id
+	// articleStore.AuthorID = claims["id"].(uint)
 
 	command := article.CreateArticleCommand{
 		ArticleStore: articleStore,
