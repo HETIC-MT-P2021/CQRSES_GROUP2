@@ -6,6 +6,7 @@ import (
 	"cqrses/models"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/labstack/echo/v4"
 )
@@ -25,10 +26,11 @@ func CreateArticle(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
-	// user := c.Get("user").(*jwt.Token)
-	// claims := user.Claims.(jwt.MapClaims)
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	authorID := claims["id"].(float64)
 
-	// articleStore.AuthorID = claims["id"].(uint)
+	articleStore.AuthorID = uint(authorID)
 
 	command := article.CreateArticleCommand{
 		ArticleStore: articleStore,

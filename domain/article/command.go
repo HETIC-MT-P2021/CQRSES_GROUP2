@@ -33,11 +33,11 @@ func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, err
 	// Return command type
 	switch command.CommandType() {
 	case "CreateArticleCommand":
-		// payload := command.Payload().(*CreateArticleCommand)
+		payload := command.Payload().(*CreateArticleCommand)
 		// article, err := validateAndPersistArticle(&payload.ArticleForm)
 		// return article, err
 		var err error
-		return "ok", err
+		return &payload.ArticleStore, err
 	case "EditArticleCommand":
 		return nil, nil
 	default:
