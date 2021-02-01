@@ -25,7 +25,7 @@ func NewArticleCommandHandler() *CommandHandler {
 func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, error) {
 	switch cmd := command.Payload().(type) {
 	case *CreateArticleCommand:
-		article, err := BindArticleFrom(&cmd.ArticleStore)
+		article, err := BindArticleStore(&cmd.ArticleStore)
 		return article, err
 	case *EditArticleCommand:
 		return nil, nil
