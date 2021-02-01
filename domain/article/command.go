@@ -10,15 +10,8 @@ type CreateArticleCommand struct {
 	ArticleStore models.ArticleStore
 }
 
-// CommandType todo
-func (c CreateArticleCommand) CommandType() string {
-	return "CreateArticleCommand"
-}
-
-// Payload todo
-func (c CreateArticleCommand) Payload() interface{} {
-	return &c
-}
+// EditArticleCommand todo
+type EditArticleCommand struct{}
 
 // CommandHandler todo
 type CommandHandler struct{}
@@ -30,15 +23,11 @@ func NewArticleCommandHandler() *CommandHandler {
 
 // Handle handle the command
 func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, error) {
-	// Return command type
-	switch command.CommandType() {
-	case "CreateArticleCommand":
-		payload := command.Payload().(*CreateArticleCommand)
-		// article, err := validateAndPersistArticle(&payload.ArticleForm)
-		// return article, err
-		var err error
-		return &payload.ArticleStore, err
-	case "EditArticleCommand":
+	switch cmd := command.Payload().(type) {
+	case *CreateArticleCommand:
+		article, err := BindArticleFrom(&cmd.ArticleStore)
+		return article, err
+	case *EditArticleCommand:
 		return nil, nil
 	default:
 		return nil, nil

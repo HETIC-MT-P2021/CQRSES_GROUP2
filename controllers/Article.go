@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"cqrses/cqrs"
 	"cqrses/domain"
 	"cqrses/domain/article"
 	"cqrses/models"
@@ -35,7 +36,9 @@ func CreateArticle(c echo.Context) error {
 	command := article.CreateArticleCommand{
 		ArticleStore: articleStore,
 	}
-	res, err := domain.Cb.Dispatch(command)
+
+	cmdDescriptor := cqrs.NewCommandMessage(&command)
+	res, err := domain.Cb.Dispatch(cmdDescriptor)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Article error", err.Error()))
 	}
