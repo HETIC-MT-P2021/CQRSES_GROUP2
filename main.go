@@ -20,6 +20,8 @@ func main() {
 	database.Migrate()
 	database.Seed()
 
+	database.EsConnect()
+
 	e := echo.New()
 
 	router.InitRoutes(e)
