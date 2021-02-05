@@ -4,6 +4,7 @@ package main
 import (
 	"cqrses/config"
 	"cqrses/database"
+	"cqrses/database/factory"
 	"cqrses/domain"
 	"cqrses/router"
 
@@ -17,8 +18,8 @@ func main() {
 	config.SetConfig()
 
 	database.Connect()
-	database.Migrate()
-	database.Seed()
+	factory.Migrate()
+	factory.Seed()
 
 	database.GetElasticCon()
 

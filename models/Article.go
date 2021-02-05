@@ -1,10 +1,11 @@
 package models
 
 import (
-	"cqrses/database"
+	db "cqrses/database"
 	"cqrses/services"
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // Article defines the structure of the article entity
@@ -25,7 +26,7 @@ type ArticleData struct {
 // StoreArticle saves an article in es
 func StoreArticle(article *Article) error {
 	eventName := "article"
-	es := services.NewsElastic(database.ElasticConn)
+	es := services.NewsElastic(db.ElasticConn)
 
 	document := services.Document{
 		Body: Event{

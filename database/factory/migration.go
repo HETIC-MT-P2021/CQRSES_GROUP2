@@ -1,6 +1,7 @@
-package database
+package factory
 
 import (
+	"cqrses/database"
 	"cqrses/models"
 
 	"fmt"
@@ -8,7 +9,7 @@ import (
 
 // Migrate creates the tables and the database structure.
 func Migrate() {
-	if err := Gorm.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
+	if err := database.Gorm.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
 		models.User{},
 	); err != nil {
 		panic(fmt.Errorf("Migration error: %s", err.Error()))
