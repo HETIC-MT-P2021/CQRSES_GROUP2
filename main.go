@@ -20,7 +20,7 @@ func main() {
 	database.Migrate()
 	database.Seed()
 
-	database.EsConnect()
+	database.GetElasticCon()
 
 	e := echo.New()
 
