@@ -62,6 +62,12 @@ func UpdateArticle(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	authorID := claims["id"].(float64)
+
+	articleData.CreatedBy = uint(authorID)
+
 	command := article.EditArticleCommand{
 		ObjectID:    objectID,
 		ArticleData: articleData,
