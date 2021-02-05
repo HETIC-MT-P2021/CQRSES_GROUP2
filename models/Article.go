@@ -39,3 +39,8 @@ func StoreArticle(article *Article) error {
 	// }
 	return nil
 }
+
+// UpdateArticle saves an modificated article in es
+func UpdateArticle(AggregateID string, article *Article) error {
+	return nil
+}
