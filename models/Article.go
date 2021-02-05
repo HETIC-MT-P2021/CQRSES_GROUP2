@@ -24,6 +24,7 @@ func StoreArticle(article *Article) error {
 
 	// document := services.Document{
 	// 	Body: es.Event{
+	//	    AggregateID: uuid.NewV4().String(),
 	// 		Typology:  es.Create,
 	// 		Payload:   article,
 	// 		CreatedAt: time.Now(),
@@ -36,5 +37,10 @@ func StoreArticle(article *Article) error {
 	// 	log.Error("Error while creating event : ", err)
 	// 	return err
 	// }
+	return nil
+}
+
+// UpdateArticle saves an modificated article in es
+func UpdateArticle(AggregateID string, article *Article) error {
 	return nil
 }

@@ -18,4 +18,5 @@ func InitBus() {
 	Qb = cqrs.NewQueryBus()
 
 	_ = Cb.RegisterHandler(article.NewArticleCommandHandler(), &article.CreateArticleCommand{})
+	_ = Cb.RegisterHandler(article.NewArticleCommandHandler(), &article.EditArticleCommand{})
 }
