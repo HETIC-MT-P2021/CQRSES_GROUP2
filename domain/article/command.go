@@ -13,7 +13,7 @@ type CreateArticleCommand struct {
 
 // EditArticleCommand todo
 type EditArticleCommand struct {
-	AggregateID string
+	ObjectID    string
 	ArticleData models.ArticleData
 }
 
@@ -32,7 +32,7 @@ func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, err
 		article, err := BindArticleAndCreate(&cmd.ArticleData)
 		return article, err
 	case *EditArticleCommand:
-		article, err := BindArticleAndUpdate(cmd.AggregateID, &cmd.ArticleData)
+		article, err := BindArticleAndUpdate(cmd.ObjectID, &cmd.ArticleData)
 		return article, err
 	default:
 		return nil, nil
@@ -58,7 +58,7 @@ func BindArticleAndCreate(articleData *models.ArticleData) (interface{}, error) 
 }
 
 // BindArticleAndUpdate bind the ArticleData entity in the Article entity
-func BindArticleAndUpdate(AggregateID string, articleData *models.ArticleData) (models.Article, error) {
+func BindArticleAndUpdate(ObjectID string, articleData *models.ArticleData) (interface{}, error) {
 
 	article := models.Article{
 		Title:     articleData.Title,
@@ -67,9 +67,10 @@ func BindArticleAndUpdate(AggregateID string, articleData *models.ArticleData) (
 		CreatedBy: articleData.CreatedBy,
 	}
 
-	if err := models.UpdateArticle(AggregateID, &article); err != nil {
+	document, err := models.UpdateArticle(ObjectID, &article)
+	if err != nil {
 		return models.Article{}, err
 	}
 
-	return article, nil
+	return document, err
 }

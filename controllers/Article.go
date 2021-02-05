@@ -48,7 +48,7 @@ func CreateArticle(c echo.Context) error {
 
 // UpdateArticle update an article
 func UpdateArticle(c echo.Context) error {
-	aggregateID := c.Param("id")
+	objectID := c.Param("id")
 	var articleData models.ArticleData
 
 	if err := c.Bind(&articleData); err != nil {
@@ -63,7 +63,7 @@ func UpdateArticle(c echo.Context) error {
 	}
 
 	command := article.EditArticleCommand{
-		AggregateID: aggregateID,
+		ObjectID:    objectID,
 		ArticleData: articleData,
 	}
 	cmdDescriptor := cqrs.NewCommandMessage(&command)

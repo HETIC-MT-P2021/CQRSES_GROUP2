@@ -46,6 +46,23 @@ func StoreArticle(article *Article) (interface{}, error) {
 }
 
 // UpdateArticle saves an modificated article in es
-func UpdateArticle(AggregateID string, article *Article) error {
-	return nil
+func UpdateArticle(ObjectID string, article *Article) (interface{}, error) {
+	eventName := "article"
+	es := services.NewsElastic(database.ElasticConn)
+
+	document := services.Document{
+		Body: Event{
+			Name:      eventName,
+			Typology:  Update,
+			ObjectID:  ObjectID,
+			Payload:   article,
+			CreatedAt: time.Now(),
+		},
+	}
+
+	err := es.CreateNewDocument(eventName, &document)
+	if err != nil {
+		return nil, err
+	}
+	return document, err
 }
