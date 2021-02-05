@@ -1,7 +1,7 @@
 package models
 
 import (
-	db "cqrses/database"
+	"cqrses/database"
 	"cqrses/services"
 	"time"
 
@@ -26,7 +26,7 @@ type ArticleData struct {
 // StoreArticle saves an article in es
 func StoreArticle(article *Article) error {
 	eventName := "article"
-	es := services.NewsElastic(db.ElasticConn)
+	es := services.NewsElastic(database.ElasticConn)
 
 	document := services.Document{
 		Body: Event{
