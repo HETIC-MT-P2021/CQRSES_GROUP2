@@ -1,6 +1,9 @@
 package models
 
 import (
+	"cqrses/database"
+	"cqrses/services"
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -21,22 +24,23 @@ type ArticleData struct {
 
 // StoreArticle saves an article in es
 func StoreArticle(article *Article) error {
+	eventName := "article"
+	es := services.NewsElastic(database.ElasticConn)
 
-	// document := services.Document{
-	// 	Body: es.Event{
-	//	    AggregateID: uuid.NewV4().String(),
-	// 		Typology:  es.Create,
-	// 		Payload:   article,
-	// 		CreatedAt: time.Now(),
-	// 		Index:     1,
-	// 	},
-	// }
+	document := services.Document{
+		Body: Event{
+			Name:      eventName,
+			Typology:  Create,
+			ObjectID:  uuid.NewString(),
+			Payload:   article,
+			CreatedAt: time.Now(),
+		},
+	}
 
-	// err := services.CreateNewDocumentInIndex("article", &document)
-	// if err != nil {
-	// 	log.Error("Error while creating event : ", err)
-	// 	return err
-	// }
+	err := es.CreateNewDocument(eventName, &document)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
