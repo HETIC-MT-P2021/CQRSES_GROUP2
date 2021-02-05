@@ -6,11 +6,11 @@ import (
 
 // Event define the structure of the event element
 type Event struct {
-	AggregateID string
-	Typology    Typology
-	Payload     interface{}
-	CreatedAt   time.Time
-	Index       uint
+	Name      string
+	Typology  Typology
+	ObjectID  string
+	Payload   interface{}
+	CreatedAt time.Time
 }
 
 // Typology of an event
