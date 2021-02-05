@@ -4,6 +4,7 @@ package main
 import (
 	"cqrses/config"
 	"cqrses/database"
+	"cqrses/domain"
 	"cqrses/router"
 
 	"github.com/labstack/echo/v4"
@@ -22,6 +23,7 @@ func main() {
 	e := echo.New()
 
 	router.InitRoutes(e)
+	domain.InitBus()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000"},

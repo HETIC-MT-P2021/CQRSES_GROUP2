@@ -24,6 +24,8 @@ func InitRoutes(e *echo.Echo) {
 	// Restricted group
 	r := e.Group("/api", middleware.JWT([]byte("secret")))
 
+	r.POST("/article", controllers.CreateArticle)
+
 	// Refresh token routes
 	r.POST("/refresh", controllers.RefreshToken)
 
