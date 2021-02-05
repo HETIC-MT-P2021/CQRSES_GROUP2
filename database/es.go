@@ -2,40 +2,33 @@ package database
 
 import (
 	"fmt"
+	"log"
+	"strings"
 
+	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/spf13/viper"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
-// Gorm public declaration
-var Gorm *gorm.DB
+// Es public declaration
+var EsClient *elasticsearch.Client
 
-// GetSQLConfig return config variables of the database.
-func GetSQLConfig() string {
-	return fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?parseTime=true",
-		viper.GetString("DB_USER"),
-		viper.GetString("DB_PASSWORD"),
-		viper.GetString("DB_HOST"),
-		viper.GetString("DB_PORT"),
-		viper.GetString("DB_NAME"),
-	)
+// GetEsConfig return config variables of the elasticsearch.
+func GetEsConfig() elasticsearch.Config {
+	return elasticsearch.Config{
+		Addresses: strings.Split(viper.GetString("ES_URL"), ","),
+	}
 }
 
-// Connect connect to the database.
-func Connect() {
-	var err error
+// EsConnect connect to the elasticsearch.
+func EsConnect() {
+	cfg := GetEsConfig()
 
-	dsn := GetSQLConfig()
-
-	Gorm, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	es, err := elasticsearch.NewClient(cfg)
 	if err != nil {
-		panic(fmt.Errorf("Fatal error database connexion: %s", err.Error()))
+		panic(fmt.Errorf("error creating the client: %s", err))
+	} else {
+		log.Println(es.Info())
 	}
 
-	sqlDB, err := Gorm.DB()
-	if err := sqlDB.Ping(); err != nil {
-		panic(fmt.Errorf("Fatal error database connexion: %s", err.Error()))
-	}
+	EsClient = es
 }
