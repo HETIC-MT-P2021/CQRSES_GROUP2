@@ -24,7 +24,7 @@ type ArticleData struct {
 }
 
 // StoreArticle saves an article in es
-func StoreArticle(article *Article) error {
+func StoreArticle(article *Article) (interface{}, error) {
 	eventName := "article"
 	es := services.NewsElastic(database.ElasticConn)
 
@@ -40,9 +40,9 @@ func StoreArticle(article *Article) error {
 
 	err := es.CreateNewDocument(eventName, &document)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return document, err
 }
 
 // UpdateArticle saves an modificated article in es

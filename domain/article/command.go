@@ -40,7 +40,7 @@ func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, err
 }
 
 // BindArticleAndCreate bind the ArticleData entity in the Article entity
-func BindArticleAndCreate(articleData *models.ArticleData) (models.Article, error) {
+func BindArticleAndCreate(articleData *models.ArticleData) (interface{}, error) {
 
 	article := models.Article{
 		Title:     articleData.Title,
@@ -49,11 +49,12 @@ func BindArticleAndCreate(articleData *models.ArticleData) (models.Article, erro
 		CreatedBy: articleData.CreatedBy,
 	}
 
-	if err := models.StoreArticle(&article); err != nil {
+	document, err := models.StoreArticle(&article)
+	if err != nil {
 		return models.Article{}, err
 	}
 
-	return article, nil
+	return document, err
 }
 
 // BindArticleAndUpdate bind the ArticleData entity in the Article entity
