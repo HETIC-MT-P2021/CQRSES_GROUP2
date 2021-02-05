@@ -14,15 +14,15 @@ import (
 
 // CreateArticle create an article
 func CreateArticle(c echo.Context) error {
-	var articleStore models.ArticleStore
+	var articleData models.ArticleData
 
-	if err := c.Bind(&articleStore); err != nil {
+	if err := c.Bind(&articleData); err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
-	if err := validation.ValidateStruct(&articleStore,
-		validation.Field(&articleStore.Title, validation.Required),
-		validation.Field(&articleStore.Content, validation.Required),
+	if err := validation.ValidateStruct(&articleData,
+		validation.Field(&articleData.Title, validation.Required),
+		validation.Field(&articleData.Content, validation.Required),
 	); err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
@@ -31,10 +31,10 @@ func CreateArticle(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 	authorID := claims["id"].(float64)
 
-	articleStore.AuthorID = uint(authorID)
+	articleData.CreatedBy = uint(authorID)
 
 	command := article.CreateArticleCommand{
-		ArticleStore: articleStore,
+		ArticleData: articleData,
 	}
 
 	cmdDescriptor := cqrs.NewCommandMessage(&command)
@@ -49,28 +49,22 @@ func CreateArticle(c echo.Context) error {
 // UpdateArticle update an article
 func UpdateArticle(c echo.Context) error {
 	aggregateID := c.Param("id")
-	var articleStore models.ArticleStore
+	var articleData models.ArticleData
 
-	if err := c.Bind(&articleStore); err != nil {
+	if err := c.Bind(&articleData); err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
-	if err := validation.ValidateStruct(&articleStore,
-		validation.Field(&articleStore.Title, validation.Required),
-		validation.Field(&articleStore.Content, validation.Required),
+	if err := validation.ValidateStruct(&articleData,
+		validation.Field(&articleData.Title, validation.Required),
+		validation.Field(&articleData.Content, validation.Required),
 	); err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	authorID := claims["id"].(float64)
-
-	articleStore.AuthorID = uint(authorID)
-
 	command := article.EditArticleCommand{
-		AggregateID:  aggregateID,
-		ArticleStore: articleStore,
+		AggregateID: aggregateID,
+		ArticleData: articleData,
 	}
 	cmdDescriptor := cqrs.NewCommandMessage(&command)
 	res, err := domain.Cb.Dispatch(cmdDescriptor)

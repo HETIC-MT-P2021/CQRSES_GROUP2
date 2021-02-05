@@ -6,17 +6,17 @@ import (
 
 // Article defines the structure of the article entity
 type Article struct {
-	AuthorID  uint      `form:"author_id"`
 	Title     string    `form:"title"`
 	Content   string    `form:"content"`
 	CreatedAt time.Time `form:"created_at"`
+	CreatedBy uint      `form:"created_by"`
 }
 
-// ArticleStore defines the structure of the article entity for the create command
-type ArticleStore struct {
-	AuthorID uint   `form:"author_id"`
-	Title    string `form:"title"`
-	Content  string `form:"content"`
+// ArticleData defines the structure of the article entity for the create command
+type ArticleData struct {
+	Title     string `form:"title"`
+	Content   string `form:"content"`
+	CreatedBy uint   `form:"created_by"`
 }
 
 // StoreArticle saves an article in es

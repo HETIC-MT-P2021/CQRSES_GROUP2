@@ -8,13 +8,13 @@ import (
 
 // CreateArticleCommand is the struct we use to create a new command
 type CreateArticleCommand struct {
-	ArticleStore models.ArticleStore
+	ArticleData models.ArticleData
 }
 
 // EditArticleCommand todo
 type EditArticleCommand struct {
-	AggregateID  string
-	ArticleStore models.ArticleStore
+	AggregateID string
+	ArticleData models.ArticleData
 }
 
 // CommandHandler todo
@@ -29,24 +29,24 @@ func NewArticleCommandHandler() *CommandHandler {
 func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, error) {
 	switch cmd := command.Payload().(type) {
 	case *CreateArticleCommand:
-		article, err := BindArticleAndCreate(&cmd.ArticleStore)
+		article, err := BindArticleAndCreate(&cmd.ArticleData)
 		return article, err
 	case *EditArticleCommand:
-		article, err := BindArticleAndUpdate(cmd.AggregateID, &cmd.ArticleStore)
+		article, err := BindArticleAndUpdate(cmd.AggregateID, &cmd.ArticleData)
 		return article, err
 	default:
 		return nil, nil
 	}
 }
 
-// BindArticleAndCreate bind the ArticleStore entity in the Article entity
-func BindArticleAndCreate(articleStore *models.ArticleStore) (models.Article, error) {
+// BindArticleAndCreate bind the ArticleData entity in the Article entity
+func BindArticleAndCreate(articleData *models.ArticleData) (models.Article, error) {
 
 	article := models.Article{
-		AuthorID:  articleStore.AuthorID,
-		Title:     articleStore.Title,
-		Content:   articleStore.Content,
+		Title:     articleData.Title,
+		Content:   articleData.Content,
 		CreatedAt: time.Now(),
+		CreatedBy: articleData.CreatedBy,
 	}
 
 	if err := models.StoreArticle(&article); err != nil {
@@ -56,14 +56,14 @@ func BindArticleAndCreate(articleStore *models.ArticleStore) (models.Article, er
 	return article, nil
 }
 
-// BindArticleAndUpdate bind the ArticleStore entity in the Article entity
-func BindArticleAndUpdate(AggregateID string, articleStore *models.ArticleStore) (models.Article, error) {
+// BindArticleAndUpdate bind the ArticleData entity in the Article entity
+func BindArticleAndUpdate(AggregateID string, articleData *models.ArticleData) (models.Article, error) {
 
 	article := models.Article{
-		AuthorID:  articleStore.AuthorID,
-		Title:     articleStore.Title,
-		Content:   articleStore.Content,
+		Title:     articleData.Title,
+		Content:   articleData.Content,
 		CreatedAt: time.Now(),
+		CreatedBy: articleData.CreatedBy,
 	}
 
 	if err := models.UpdateArticle(AggregateID, &article); err != nil {
