@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/elastic/go-elasticsearch/v8 v8.0.0-20201229214741-2366c2514674 // indirect
 	github.com/go-ozzo/ozzo-validation/v4 v4.2.2
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/labstack/echo/v4 v4.1.16
