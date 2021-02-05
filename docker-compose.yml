@@ -27,5 +27,14 @@ services:
     ports:
       - 3306:3306
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5675:5675
+      - 15675:15675
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
 volumes:
   db-data:
+  rabbitmq-data:
