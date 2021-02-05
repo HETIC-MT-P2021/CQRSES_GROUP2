@@ -24,6 +24,7 @@ func StoreArticle(article *Article) error {
 
 	// document := services.Document{
 	// 	Body: es.Event{
+	//	    AggregateID: uuid.NewV4().String(),
 	// 		Typology:  es.Create,
 	// 		Payload:   article,
 	// 		CreatedAt: time.Now(),

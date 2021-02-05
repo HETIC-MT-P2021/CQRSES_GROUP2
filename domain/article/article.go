@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-// BindArticleStore bind the ArticleStore entity in the Article entity
-func BindArticleStore(articleStore *models.ArticleStore) (models.Article, error) {
+// BindArticleAndCreate bind the ArticleStore entity in the Article entity
+func BindArticleAndCreate(articleStore *models.ArticleStore) (models.Article, error) {
 
 	article := models.Article{
 		AuthorID:  articleStore.AuthorID,
