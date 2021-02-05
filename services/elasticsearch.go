@@ -66,7 +66,7 @@ func (es ElasticService) CreateNewDocument(index string, document *Document) err
 		}
 	}
 
-	_, err = client.Index().
+	indexedDocument, err := client.Index().
 		Index(index).
 		BodyJson(document.Body).
 		Do(es.Context)
@@ -74,6 +74,8 @@ func (es ElasticService) CreateNewDocument(index string, document *Document) err
 	if err != nil {
 		return fmt.Errorf("cannot add resource in index %s", index)
 	}
+
+	document.ID = indexedDocument.Id
 
 	return nil
 }
