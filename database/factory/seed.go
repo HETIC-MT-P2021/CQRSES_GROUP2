@@ -1,6 +1,7 @@
-package database
+package factory
 
 import (
+	"cqrses/database"
 	"cqrses/helpers"
 	"cqrses/models"
 	"fmt"
@@ -18,5 +19,5 @@ func UserSeeder(lastName string, firstName string, email string, password string
 	if err != nil {
 		panic(fmt.Errorf("Seeding error: %s", err.Error()))
 	}
-	Gorm.Where(models.User{Email: email}).FirstOrCreate(&models.User{LastName: lastName, FirstName: firstName, Email: email, Password: hashedPassword, Admin: admin})
+	database.Gorm.Where(models.User{Email: email}).FirstOrCreate(&models.User{LastName: lastName, FirstName: firstName, Email: email, Password: hashedPassword, Admin: admin})
 }

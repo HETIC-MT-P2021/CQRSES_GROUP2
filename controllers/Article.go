@@ -48,7 +48,7 @@ func CreateArticle(c echo.Context) error {
 
 // UpdateArticle update an article
 func UpdateArticle(c echo.Context) error {
-	aggregateID := c.Param("id")
+	objectID := c.Param("id")
 	var articleData models.ArticleData
 
 	if err := c.Bind(&articleData); err != nil {
@@ -62,8 +62,14 @@ func UpdateArticle(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
 	}
 
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	authorID := claims["id"].(float64)
+
+	articleData.CreatedBy = uint(authorID)
+
 	command := article.EditArticleCommand{
-		AggregateID: aggregateID,
+		ObjectID:    objectID,
 		ArticleData: articleData,
 	}
 	cmdDescriptor := cqrs.NewCommandMessage(&command)
