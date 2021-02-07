@@ -34,11 +34,37 @@ DB_PASSWORD=password
 
 Start the project with :
 
-```
-docker-compose up --build
+```shell
+$ cp .env.example .env
+$ make compose/build compose/up
 ```
 
 You can now access the API: [http://localhost:1323/](http://localhost:1323/).
+
+## Use the command line
+
+To list available commands, either run make with no parameters or execute make help:
+
+```shell
+$ make help
+Usage: make <command>
+
+Commands:
+  compose/build                  Build all Docker images of the project
+  compose/up                     Start all containers (in the background)
+  compose/down                   Stops and deletes containers and networks created by "up".
+  compose/restart                Restarts all containers
+  compose/start                  Starts existing containers for a service
+  compose/stop                   Stops containers without removing them
+  compose/purge                  Stops and deletes containers, volumes, images (local) and networks created by "up".
+  compose/purge/all              Stops and deletes containers, volumes, images (all) and networks created by "up".
+  compose/rebuild                Rebuild the project
+  compose/rebuild/%              Rebuild a specific service ex: make compose/rebuild/<service_name>
+  compose/top                    Displays the running processes.
+  compose/monitor                Display of container(s) resource usage statistics
+  compose/monitor/follow         Display a live stream of container(s) resource usage statistics
+  compose/urls                   Get project's URL
+```
 
 ## Test
 
