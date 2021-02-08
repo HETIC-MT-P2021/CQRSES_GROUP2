@@ -16,20 +16,6 @@ To use this app in an optimal way, docker is required.
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
 
-## Configuration
-
-You only have the *.env* file to configure :
-
-```
-APP_URL=http:localhost:1323
-APP_NAME=NAME
-DB_HOST=db
-DB_PORT=3306
-DB_NAME=database
-DB_USER=user
-DB_PASSWORD=password
-```
-
 ## Usage
 
 Start the project with :
