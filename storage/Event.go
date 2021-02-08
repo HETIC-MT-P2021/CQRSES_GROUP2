@@ -1,10 +1,10 @@
-package models
+package storage
 
 import (
 	"time"
 )
 
-// Event define the structure of the event element
+// Event defines the structure of the events to be stored
 type Event struct {
 	Name      string
 	Typology  Typology

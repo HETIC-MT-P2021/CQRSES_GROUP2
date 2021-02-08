@@ -3,6 +3,7 @@ package models
 import (
 	"cqrses/database"
 	"cqrses/services"
+	"cqrses/storage"
 	"time"
 
 	"github.com/google/uuid"
@@ -29,9 +30,9 @@ func StoreArticle(article *Article) (interface{}, error) {
 	es := services.NewsElastic(database.ElasticConn)
 
 	document := services.Document{
-		Body: Event{
+		Body: storage.Event{
 			Name:      eventName,
-			Typology:  Create,
+			Typology:  storage.Create,
 			ObjectID:  uuid.NewString(),
 			Payload:   article,
 			CreatedAt: time.Now(),
@@ -51,9 +52,9 @@ func UpdateArticle(ObjectID string, article *Article) (interface{}, error) {
 	es := services.NewsElastic(database.ElasticConn)
 
 	document := services.Document{
-		Body: Event{
+		Body: storage.Event{
 			Name:      eventName,
-			Typology:  Update,
+			Typology:  storage.Update,
 			ObjectID:  ObjectID,
 			Payload:   article,
 			CreatedAt: time.Now(),
