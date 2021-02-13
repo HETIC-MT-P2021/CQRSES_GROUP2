@@ -45,14 +45,14 @@ func StoreArticle(article *Article) (interface{}, error) {
 }
 
 // UpdateArticle saves an modified article in es
-func UpdateArticle(ObjectID string, article *Article) (interface{}, error) {
+func UpdateArticle(objectID string, article *Article) (interface{}, error) {
 	eventName := "article"
 
 	document := storage.Document{
 		Body: storage.Event{
 			Name:      eventName,
 			Typology:  storage.Update,
-			ObjectID:  ObjectID,
+			ObjectID:  objectID,
 			Payload:   article,
 			CreatedAt: time.Now(),
 		},

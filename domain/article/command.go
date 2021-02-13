@@ -58,7 +58,7 @@ func BindArticleAndCreate(articleData *models.ArticleData) (interface{}, error) 
 }
 
 // BindArticleAndUpdate bind the ArticleData entity in the Article entity
-func BindArticleAndUpdate(ObjectID string, articleData *models.ArticleData) (interface{}, error) {
+func BindArticleAndUpdate(objectID string, articleData *models.ArticleData) (interface{}, error) {
 
 	article := models.Article{
 		Title:     articleData.Title,
@@ -67,7 +67,7 @@ func BindArticleAndUpdate(ObjectID string, articleData *models.ArticleData) (int
 		CreatedBy: articleData.CreatedBy,
 	}
 
-	document, err := models.UpdateArticle(ObjectID, &article)
+	document, err := models.UpdateArticle(objectID, &article)
 	if err != nil {
 		return models.Article{}, err
 	}
