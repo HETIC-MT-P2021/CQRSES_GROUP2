@@ -7,7 +7,7 @@ func init() {
 }
 
 type Document struct {
-	Id   string
+	ID   string
 	Body interface{}
 }
 

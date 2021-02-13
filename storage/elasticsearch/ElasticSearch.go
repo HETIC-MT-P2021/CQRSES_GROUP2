@@ -72,7 +72,7 @@ func (es *ElasticSearch) Save(index string, document *storage.Document) error {
 		return fmt.Errorf("cannot add resource in index %s", index)
 	}
 
-	document.Id = indexedDocument.Id
+	document.ID = indexedDocument.Id
 
 	return nil
 }
