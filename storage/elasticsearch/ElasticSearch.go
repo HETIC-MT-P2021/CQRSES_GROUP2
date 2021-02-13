@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"cqrses/storage"
-
 	"github.com/olivere/elastic/v7"
 )
 

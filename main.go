@@ -7,8 +7,8 @@ import (
 	"cqrses/database/factory"
 	"cqrses/domain"
 	"cqrses/router"
-	"cqrses/storage"
 	"cqrses/storage/elasticsearch"
+	"cqrses/storage/eventstore"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -25,7 +25,7 @@ func main() {
 
 	database.GetElasticCon()
 	elastic := elasticsearch.New(database.ElasticConn)
-	storage.SetStorage(elastic)
+	eventstore.SetStorage(elastic)
 
 	e := echo.New()
 

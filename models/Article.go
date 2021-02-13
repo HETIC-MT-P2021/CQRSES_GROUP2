@@ -1,8 +1,10 @@
 package models
 
 import (
-	"cqrses/storage"
 	"time"
+
+	"cqrses/storage"
+	"cqrses/storage/eventstore"
 
 	"github.com/google/uuid"
 )
@@ -27,16 +29,16 @@ func StoreArticle(article *Article) (interface{}, error) {
 	eventName := "article"
 
 	document := storage.Document{
-		Body: storage.Event{
+		Body: eventstore.Event{
 			Name:      eventName,
-			Typology:  storage.Create,
+			Typology:  eventstore.Create,
 			ObjectID:  uuid.NewString(),
 			Payload:   article,
 			CreatedAt: time.Now(),
 		},
 	}
 
-	err := storage.Save(eventName, &document)
+	err := eventstore.Save(eventName, &document)
 	if err != nil {
 		return nil, err
 	}
@@ -49,16 +51,16 @@ func UpdateArticle(objectID string, article *Article) (interface{}, error) {
 	eventName := "article"
 
 	document := storage.Document{
-		Body: storage.Event{
+		Body: eventstore.Event{
 			Name:      eventName,
-			Typology:  storage.Update,
+			Typology:  eventstore.Update,
 			ObjectID:  objectID,
 			Payload:   article,
 			CreatedAt: time.Now(),
 		},
 	}
 
-	err := storage.Save(eventName, &document)
+	err := eventstore.Save(eventName, &document)
 	if err != nil {
 		return nil, err
 	}
