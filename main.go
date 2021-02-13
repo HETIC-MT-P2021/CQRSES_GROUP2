@@ -16,7 +16,6 @@ import (
 
 // main launch all part of the project
 func main() {
-
 	config.SetConfig()
 
 	database.Connect()
@@ -24,8 +23,10 @@ func main() {
 	factory.Seed()
 
 	database.GetElasticCon()
-	elastic := elasticsearch.New(database.ElasticConn)
 	eventstore.GetInstance()
+
+	elastic := elasticsearch.New(database.ElasticConn)
+
 	eventstore.SetStorage(elastic)
 
 	e := echo.New()

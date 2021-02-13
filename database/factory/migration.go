@@ -12,6 +12,6 @@ func Migrate() {
 	if err := database.Gorm.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
 		models.User{},
 	); err != nil {
-		panic(fmt.Errorf("Migration error: %s", err.Error()))
+		panic(fmt.Errorf("migration error: %s", err.Error()))
 	}
 }

@@ -9,6 +9,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+const expTime = time.Hour * 24
+
 // GenerateTokenPair create a new JWT token for users.
 func GenerateTokenPair(user models.User) (t string, rt string, err error) {
 	// Create token
@@ -19,10 +21,10 @@ func GenerateTokenPair(user models.User) (t string, rt string, err error) {
 	claims["id"] = user.ID
 	claims["admin"] = user.Admin
 	claims["name"] = user.LastName + user.FirstName
-	claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	claims["exp"] = time.Now().Add(expTime).Unix()
 
 	// Generate encoded token and send it as response.
-	t, err = token.SignedString([]byte("secret"))
+	t, _ = token.SignedString([]byte("secret"))
 
 	// Create token
 	refreshToken := jwt.New(jwt.SigningMethodHS256)
@@ -30,7 +32,7 @@ func GenerateTokenPair(user models.User) (t string, rt string, err error) {
 	// Set Rt claims
 	rtClaims := refreshToken.Claims.(jwt.MapClaims)
 	rtClaims["sub"] = 1
-	rtClaims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	rtClaims["exp"] = time.Now().Add(expTime).Unix()
 
 	// Generate encoded token and send it as response.
 	rt, err = refreshToken.SignedString([]byte("secret"))
@@ -42,7 +44,7 @@ func GenerateTokenPair(user models.User) (t string, rt string, err error) {
 func RefreshJWTToken(refreshToken string, user models.User) (t string, rt string, err error) {
 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 		return []byte("secret"), nil
 	})

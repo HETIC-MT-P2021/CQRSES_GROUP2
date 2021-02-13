@@ -31,11 +31,11 @@ func Connect() {
 
 	Gorm, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic(fmt.Errorf("Fatal error database connexion: %s", err.Error()))
+		panic(fmt.Errorf("fatal error database connexion: %s", err.Error()))
 	}
 
-	sqlDB, err := Gorm.DB()
+	sqlDB, _ := Gorm.DB()
 	if err := sqlDB.Ping(); err != nil {
-		panic(fmt.Errorf("Fatal error database connexion: %s", err.Error()))
+		panic(fmt.Errorf("fatal error database connexion: %s", err.Error()))
 	}
 }

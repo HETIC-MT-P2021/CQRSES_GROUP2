@@ -19,7 +19,14 @@ func ParamValidation(next echo.HandlerFunc) echo.HandlerFunc {
 
 		for k, v := range paramValue {
 			if !r.MatchString(v) {
-				return c.JSON(http.StatusBadRequest, controllers.SetResponse(http.StatusBadRequest, "Parameters error", "Param ("+paramKey[k]+") is not a number"))
+				return c.JSON(
+					http.StatusBadRequest,
+					controllers.SetResponse(
+						http.StatusBadRequest,
+						"Parameters error",
+						"Param ("+paramKey[k]+") is not a number",
+					),
+				)
 			}
 		}
 

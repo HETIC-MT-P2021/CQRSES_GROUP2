@@ -15,12 +15,22 @@ func IsAdmin(next echo.HandlerFunc) echo.HandlerFunc {
 		if err := next(c); err != nil {
 			c.Error(err)
 		}
+
 		user := c.Get("user").(*jwt.Token)
 		claims := user.Claims.(jwt.MapClaims)
 		admin := claims["admin"].(bool)
-		if admin != true {
-			return c.JSON(http.StatusUnauthorized, controllers.SetResponse(http.StatusUnauthorized, "Authorization error", "User is not an administrator"))
+
+		if !admin {
+			return c.JSON(
+				http.StatusUnauthorized,
+				controllers.SetResponse(
+					http.StatusUnauthorized,
+					"Authorization error",
+					"User is not an administrator",
+				),
+			)
 		}
+
 		return next(c)
 	}
 }

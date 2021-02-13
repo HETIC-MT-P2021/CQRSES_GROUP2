@@ -41,7 +41,6 @@ func (ach *CommandHandler) Handle(command cqrs.CommandMessage) (interface{}, err
 
 // BindArticleAndCreate bind the ArticleData entity in the Article entity
 func BindArticleAndCreate(articleData *models.ArticleData) (interface{}, error) {
-
 	article := models.Article{
 		Title:     articleData.Title,
 		Content:   articleData.Content,
@@ -59,7 +58,6 @@ func BindArticleAndCreate(articleData *models.ArticleData) (interface{}, error) 
 
 // BindArticleAndUpdate bind the ArticleData entity in the Article entity
 func BindArticleAndUpdate(objectID string, articleData *models.ArticleData) (interface{}, error) {
-
 	article := models.Article{
 		Title:     articleData.Title,
 		Content:   articleData.Content,

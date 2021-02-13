@@ -8,7 +8,7 @@ type GetArticleQuery struct{}
 // QueryHandler todo
 type QueryHandler struct{}
 
-// NewArticleQueryHandler create a new artcile query handler
+// NewArticleQueryHandler create a new article query handler
 func NewArticleQueryHandler() *QueryHandler {
 	return &QueryHandler{}
 }

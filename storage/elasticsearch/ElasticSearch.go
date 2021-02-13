@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"cqrses/storage"
+
 	"github.com/olivere/elastic/v7"
 )
 
@@ -35,6 +36,7 @@ func (es *ElasticSearch) createIndex(index string) error {
 	if err != nil {
 		panic(err)
 	}
+
 	if exists {
 		return fmt.Errorf("index already exists: %s", err)
 	}

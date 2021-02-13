@@ -35,14 +35,15 @@ func (b *QueryBus) Dispatch(query QueryMessage) (interface{}, error) {
 	if handler, ok := b.handlers[query.QueryType()]; ok {
 		return handler.Handle(query)
 	}
-	return nil, fmt.Errorf("Fatal error query: The query bus does not have a handler for query of type: %s", query.QueryType())
+
+	return nil, fmt.Errorf("fatal error query: The query bus does not have a handler for query of type: %s", query.QueryType())
 }
 
 // RegisterHandler register the query handler
 func (b *QueryBus) RegisterHandler(handler QueryHandler, query interface{}) error {
 	typeName := reflect.TypeOf(query).Elem().Name()
 	if _, ok := b.handlers[typeName]; ok {
-		return fmt.Errorf("Fatal error query: Duplicate query handler registration with query bus for query of type: %s", typeName)
+		return fmt.Errorf("fatal error query: Duplicate query handler registration with query bus for query of type: %s", typeName)
 	}
 
 	b.handlers[typeName] = handler

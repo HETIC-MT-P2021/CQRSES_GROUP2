@@ -33,14 +33,15 @@ func (b *CommandBus) Dispatch(command CommandMessage) (interface{}, error) {
 	if handler, ok := b.handlers[command.CommandType()]; ok {
 		return handler.Handle(command)
 	}
-	return nil, fmt.Errorf("Fatal error command: The command bus does not have a handler for commands of type: %s", command.CommandType())
+
+	return nil, fmt.Errorf("fatal error command: The command bus does not have a handler for commands of type: %s", command.CommandType())
 }
 
 // RegisterHandler register the command handler
 func (b *CommandBus) RegisterHandler(handler CommandHandler, command interface{}) error {
 	typeName := reflect.TypeOf(command).Elem().Name()
 	if _, ok := b.handlers[typeName]; ok {
-		return fmt.Errorf("Fatal error command: Duplicate command handler registration with command bus for command of type: %s", typeName)
+		return fmt.Errorf("fatal error command: Duplicate command handler registration with command bus for command of type: %s", typeName)
 	}
 
 	b.handlers[typeName] = handler

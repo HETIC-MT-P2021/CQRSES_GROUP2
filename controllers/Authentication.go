@@ -34,7 +34,7 @@ func Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Connexion error", err.Error()))
 	}
 
-	if match := helpers.CheckPasswordHash(password, user.Password); match != true {
+	if match := helpers.CheckPasswordHash(password, user.Password); !match {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Connexion error", "Bad password"))
 	}
 
@@ -70,6 +70,7 @@ func Register(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Register error", err.Error()))
 	}
+
 	user.Password = hashedPassword
 
 	if err := db.Gorm.Create(&user).Error; err != nil {

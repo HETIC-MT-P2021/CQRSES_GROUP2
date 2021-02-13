@@ -38,6 +38,7 @@ func CreateArticle(c echo.Context) error {
 	}
 
 	cmdDescriptor := cqrs.NewCommandMessage(&command)
+
 	res, err := domain.Cb.Dispatch(cmdDescriptor)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Article error", err.Error()))
@@ -48,8 +49,9 @@ func CreateArticle(c echo.Context) error {
 
 // UpdateArticle update an article
 func UpdateArticle(c echo.Context) error {
-	objectID := c.Param("id")
 	var articleData models.ArticleData
+
+	objectID := c.Param("id")
 
 	if err := c.Bind(&articleData); err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Validation error", err.Error()))
@@ -72,8 +74,10 @@ func UpdateArticle(c echo.Context) error {
 		ObjectID:    objectID,
 		ArticleData: articleData,
 	}
+
 	cmdDescriptor := cqrs.NewCommandMessage(&command)
 	res, err := domain.Cb.Dispatch(cmdDescriptor)
+
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, SetResponse(http.StatusBadRequest, "Article error", err.Error()))
 	}

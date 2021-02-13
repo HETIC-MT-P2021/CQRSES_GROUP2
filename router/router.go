@@ -14,7 +14,14 @@ import (
 func InitRoutes(e *echo.Echo) {
 	// Public routes
 	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, controllers.SetResponse(http.StatusOK, "Welcome in "+viper.GetString("APP_NAME"), e.Routes()))
+		return c.JSON(
+			http.StatusOK,
+			controllers.SetResponse(
+				http.StatusOK,
+				"Welcome in "+viper.GetString("APP_NAME"),
+				e.Routes(),
+			),
+		)
 	})
 
 	// Authentication routes
@@ -29,5 +36,4 @@ func InitRoutes(e *echo.Echo) {
 
 	// Refresh token routes
 	r.POST("/refresh", controllers.RefreshToken)
-
 }
