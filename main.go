@@ -25,6 +25,7 @@ func main() {
 
 	database.GetElasticCon()
 	elastic := elasticsearch.New(database.ElasticConn)
+	eventstore.GetInstance()
 	eventstore.SetStorage(elastic)
 
 	e := echo.New()

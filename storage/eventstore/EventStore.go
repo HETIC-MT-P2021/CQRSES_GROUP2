@@ -1,11 +1,17 @@
 package eventstore
 
-import "cqrses/storage"
+import (
+	"sync"
 
+	"cqrses/storage"
+)
+
+var once sync.Once
 var es *EventStore
 
-func init() {
-	es = New()
+func GetInstance() *EventStore {
+	once.Do(func() { es = New() })
+	return es
 }
 
 type EventStore struct {
