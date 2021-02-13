@@ -1,37 +1,34 @@
-package services
+package elasticsearch
 
 import (
 	"context"
 	"fmt"
 
+	"cqrses/storage"
+
 	"github.com/olivere/elastic/v7"
 )
 
-type Document struct {
-	ID   string
-	Body interface{}
+type Storage interface {
+	storage.Storage
 }
 
-type ElasticInterface interface {
-	CreateIndex(index string) error
-	CreateNewDocument(index string, document *Document) error
-}
-
-type ElasticService struct {
+type ElasticSearch struct {
 	Context context.Context
 	Client  *elastic.Client
 }
 
-func NewsElastic(client *elastic.Client) *ElasticService {
-	es := new(ElasticService)
+// New returns an initialized ElasticSearch instance.
+func New(client *elastic.Client) *ElasticSearch {
+	es := new(ElasticSearch)
 	es.Context = context.Background()
 	es.Client = client
 
 	return es
 }
 
-// CreateIndex returns a service to create a new index.
-func (es ElasticService) CreateIndex(index string) error {
+// createIndex returns a service to create a new index.
+func (es *ElasticSearch) createIndex(index string) error {
 	client := es.Client
 
 	// Use the IndexExists service to check if a specified index exists.
@@ -55,13 +52,13 @@ func (es ElasticService) CreateIndex(index string) error {
 	return nil
 }
 
-//CreateNewDocument creates a new document
-func (es ElasticService) CreateNewDocument(index string, document *Document) error {
+// Save creates a new document
+func (es *ElasticSearch) Save(index string, document *storage.Document) error {
 	client := es.Client
 
-	exists, err := client.IndexExists(index).Do(es.Context)
+	exists, _ := client.IndexExists(index).Do(es.Context)
 	if !exists {
-		if err := es.CreateIndex(index); err != nil {
+		if err := es.createIndex(index); err != nil {
 			return err
 		}
 	}
@@ -75,7 +72,7 @@ func (es ElasticService) CreateNewDocument(index string, document *Document) err
 		return fmt.Errorf("cannot add resource in index %s", index)
 	}
 
-	document.ID = indexedDocument.Id
+	document.Id = indexedDocument.Id
 
 	return nil
 }

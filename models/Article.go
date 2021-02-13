@@ -1,8 +1,6 @@
 package models
 
 import (
-	"cqrses/database"
-	"cqrses/services"
 	"cqrses/storage"
 	"time"
 
@@ -27,9 +25,8 @@ type ArticleData struct {
 // StoreArticle saves an article in es
 func StoreArticle(article *Article) (interface{}, error) {
 	eventName := "article"
-	es := services.NewsElastic(database.ElasticConn)
 
-	document := services.Document{
+	document := storage.Document{
 		Body: storage.Event{
 			Name:      eventName,
 			Typology:  storage.Create,
@@ -39,19 +36,19 @@ func StoreArticle(article *Article) (interface{}, error) {
 		},
 	}
 
-	err := es.CreateNewDocument(eventName, &document)
+	err := storage.Save(eventName, &document)
 	if err != nil {
 		return nil, err
 	}
+
 	return document, err
 }
 
-// UpdateArticle saves an modificated article in es
+// UpdateArticle saves an modified article in es
 func UpdateArticle(ObjectID string, article *Article) (interface{}, error) {
 	eventName := "article"
-	es := services.NewsElastic(database.ElasticConn)
 
-	document := services.Document{
+	document := storage.Document{
 		Body: storage.Event{
 			Name:      eventName,
 			Typology:  storage.Update,
@@ -61,9 +58,10 @@ func UpdateArticle(ObjectID string, article *Article) (interface{}, error) {
 		},
 	}
 
-	err := es.CreateNewDocument(eventName, &document)
+	err := storage.Save(eventName, &document)
 	if err != nil {
 		return nil, err
 	}
+
 	return document, err
 }
