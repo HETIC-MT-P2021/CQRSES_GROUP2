@@ -9,8 +9,9 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-type Storage interface {
+type Connector interface {
 	storage.Storage
+	connect(options ...elastic.ClientOptionFunc) *elastic.Client
 }
 
 type ElasticSearch struct {
@@ -18,13 +19,24 @@ type ElasticSearch struct {
 	Client  *elastic.Client
 }
 
-// New returns an initialized ElasticSearch instance.
-func New(client *elastic.Client) *ElasticSearch {
+// NewConnector create a new ElasticSearch connector instance.
+func NewConnector(options ...elastic.ClientOptionFunc) *ElasticSearch {
 	es := new(ElasticSearch)
 	es.Context = context.Background()
-	es.Client = client
+	es.Client = es.connect(options...)
 
 	return es
+}
+
+// connect establish a Elasticsearch connection.
+func (es *ElasticSearch) connect(options ...elastic.ClientOptionFunc) *elastic.Client {
+	client, err := elastic.NewClient(options...)
+
+	if err != nil {
+		panic(fmt.Errorf("error creating the client: %s", err))
+	}
+
+	return client
 }
 
 // createIndex returns a service to create a new index.
