@@ -1,8 +1,8 @@
-<table width="100%">
+<table style="width: 100%; display: table">
 	<tr>
 		<td align="left" width="70%">
 			<strong>CQRSES_GROUP2</strong><br>
-			Attempt to implement CQRS and Event Sourcing in Go
+			<spam>Attempt to implement CQRS and Event Sourcing in Go</spam>
 		</td>
 		<td align="right" width="25%">
             <a href="https://goreportcard.com/report/github.com/HETIC-MT-P2021/CQRSES_GROUP2">
