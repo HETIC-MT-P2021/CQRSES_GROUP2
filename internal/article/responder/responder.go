@@ -1,11 +1,10 @@
 package responder
 
 import (
+	"cqrses/internal/pkg/service"
 	"net/http"
 
 	"cqrses/internal/pkg/response"
-	"cqrses/pkg/payload"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -15,7 +14,7 @@ func NewArticleResponder() *ArticleResponder {
 	return new(ArticleResponder)
 }
 
-func (a ArticleResponder) Response(c echo.Context, payload payload.DomainPayload) error {
+func (a ArticleResponder) Response(c echo.Context, payload service.DomainPayload) error {
 	var status int
 	var result = payload.GetResult()
 	var res *response.Response

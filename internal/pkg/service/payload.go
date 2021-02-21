@@ -1,4 +1,4 @@
-package payload
+package service
 
 type DomainPayload interface {
 	GetStatus() int         // Returns the domain status.

@@ -7,7 +7,6 @@ import (
 	"cqrses/internal/article/domain/entities"
 	"cqrses/internal/pkg/service"
 	"cqrses/pkg/cqrs"
-	"cqrses/pkg/payload"
 
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
@@ -30,7 +29,7 @@ func (s ArticleService) validation(article entities.ArticleData) error {
 	return nil
 }
 
-func (s ArticleService) Create(data entities.ArticleData) payload.DomainPayload {
+func (s ArticleService) Create(data entities.ArticleData) service.DomainPayload {
 	if err := s.validation(data); err != nil {
 		return s.NewPayload(http.StatusBadRequest, err)
 	}
@@ -49,7 +48,7 @@ func (s ArticleService) Create(data entities.ArticleData) payload.DomainPayload 
 	return s.NewPayload(http.StatusCreated, res)
 }
 
-func (s ArticleService) Update(data entities.ArticleData) payload.DomainPayload {
+func (s ArticleService) Update(data entities.ArticleData) service.DomainPayload {
 	if err := s.validation(data); err != nil {
 		return s.NewPayload(http.StatusBadRequest, err)
 	}

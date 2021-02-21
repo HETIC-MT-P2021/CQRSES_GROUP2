@@ -1,15 +1,11 @@
 package service
 
-import (
-	"cqrses/pkg/payload"
-)
-
 type Domain interface {
-	NewPayload(status int, result interface{}) payload.DomainPayload
+	NewPayload(status int, result interface{}) DomainPayload
 }
 
 type DomainService struct{}
 
-func (s DomainService) NewPayload(status int, result interface{}) payload.DomainPayload {
-	return payload.NewPayload(status, result)
+func (s DomainService) NewPayload(status int, result interface{}) DomainPayload {
+	return NewPayload(status, result)
 }
