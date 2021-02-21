@@ -1,4 +1,4 @@
-<table style="width: 100%; display: table">
+<table width="100%">
 	<tr>
 		<td align="left" width="70%">
 			<strong>CQRSES_GROUP2</strong><br>
