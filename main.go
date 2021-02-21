@@ -2,13 +2,13 @@
 package main
 
 import (
-	"cqrses/config"
-	"cqrses/database"
-	"cqrses/database/factory"
-	"cqrses/domain"
-	"cqrses/router"
-	"cqrses/storage/connectors/elasticsearch"
-	"cqrses/storage/eventstore"
+	"cqrses/app/config"
+	"cqrses/app/database"
+	"cqrses/app/database/factory"
+	"cqrses/app/router"
+	"cqrses/internal/article/domain"
+	"cqrses/pkg/storage/connectors/elasticsearch"
+	"cqrses/pkg/storage/eventstore"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -36,7 +36,7 @@ func main() {
 	e := echo.New()
 
 	router.InitRoutes(e)
-	domain.InitBus()
+	domain.InitBusses()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000"},

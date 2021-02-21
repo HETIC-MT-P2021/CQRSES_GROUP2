@@ -3,7 +3,7 @@ package controllers_test
 import (
 	"testing"
 
-	"cqrses/controllers"
+	"cqrses/app/controllers"
 
 	"github.com/labstack/echo/v4"
 )
