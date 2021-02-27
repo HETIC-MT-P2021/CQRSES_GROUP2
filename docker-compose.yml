@@ -29,11 +29,22 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
+    restart: always
     ports:
-      - 5675:5675
-      - 15675:15675
+      - 5672:5672
+      - 15672:15672
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+
+  consumer:
+    build:
+      context: ./rabbitmq
+      dockerfile: ./.docker/Dockerfile
+    restart: always
+    depends_on:
+      - rabbitmq
+    ports:
+      - 8001:8001
 
 volumes:
   db-data:

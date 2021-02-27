@@ -1,13 +1,11 @@
-// RabbitMQ
+// RabbitMq Consumer
 package main
 
 import (
 	"rabbitmq/consumer"
-	"rabbitmq/producer"
 )
 
-// main launch RabbitMQ message broker
+// main launch app consumer
 func main() {
-	producer.SendMessage()
 	consumer.ReceiveMessage()
 }

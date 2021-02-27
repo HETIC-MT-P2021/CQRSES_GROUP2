@@ -2,36 +2,56 @@ package consumer
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/streadway/amqp"
 )
 
-// ReceiveMessage receive event from rabbitmq
+const (
+	numberOftries = 10
+	waitTimes  		= 5
+)
+
+// ReceiveMessage receive messages from RabbitMq
 func ReceiveMessage() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
-	if err != nil {
-		fmt.Println("Failed Initializing Broker Connection")
-		panic(err)
+	// Connect to RabbitMq instance
+	var conn *amqp.Connection
+	var err error
+	for index := 0; index < numberOftries; index++ {
+		conn, err = amqp.Dial("amqp://guest:guest@rabbitmq")
+		if err != nil {
+			time.Sleep(waitTimes * time.Second)
+		} else {
+			break
+		}
 	}
 
 	// Open channel to RabbitMQ instance
-	channel, err := conn.Channel()
+	ch, err := conn.Channel()
 	if err != nil {
 		fmt.Println(err)
 	}
-	defer channel.Close()
+	defer ch.Close()
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	msgs, err := channel.Consume("TestQueue", "", true, false, false, false, nil)
+	// Consume RabbitMq queue
+	msgs, err := ch.Consume(
+		"TestQueue",
+		"",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
 
+	// Get RabbitMq messages
 	go func() {
 		for d := range msgs {
 			fmt.Printf("Recieved Message: %s\n", d.Body)
 		}
 	}()
-
-	fmt.Println("Successfully Connected to our RabbitMQ Instance")
 }

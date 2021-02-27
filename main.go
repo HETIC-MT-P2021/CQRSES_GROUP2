@@ -4,6 +4,7 @@ package main
 import (
 	"cqrses/config"
 	"cqrses/database"
+	"cqrses/producer"
 	"cqrses/router"
 
 	"github.com/labstack/echo/v4"
@@ -18,6 +19,8 @@ func main() {
 	database.Connect()
 	database.Migrate()
 	database.Seed()
+
+	producer.SendMessage()
 
 	e := echo.New()
 
