@@ -4,9 +4,12 @@ go 1.16
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/elastic/go-elasticsearch/v8 v8.0.0-20201229214741-2366c2514674 // indirect
 	github.com/go-ozzo/ozzo-validation/v4 v4.2.2
 	github.com/go-sql-driver/mysql v1.5.0
+	github.com/google/uuid v1.2.0
 	github.com/labstack/echo/v4 v4.1.16
+	github.com/olivere/elastic/v7 v7.0.22
 	github.com/spf13/viper v1.6.3
 	github.com/streadway/amqp v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9

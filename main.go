@@ -2,29 +2,44 @@
 package main
 
 import (
-	"cqrses/config"
-	"cqrses/database"
+	"cqrses/app/config"
+	"cqrses/app/database"
+	"cqrses/app/database/factory"
+	"cqrses/app/router"
+	"cqrses/internal/article/domain"
+	"cqrses/pkg/storage/connectors/elasticsearch"
+	"cqrses/pkg/storage/eventstore"
 	"cqrses/producer"
-	"cqrses/router"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/olivere/elastic/v7"
+	"github.com/spf13/viper"
 )
 
 // main launch all part of the project
 func main() {
-
 	config.SetConfig()
 
 	database.Connect()
-	database.Migrate()
-	database.Seed()
+	factory.Migrate()
+	factory.Seed()
+
+	eventstore.GetInstance()
+
+	elasticSearch := elasticsearch.NewConnector(
+		elastic.SetSniff(true),
+		elastic.SetURL(viper.GetString("ES_URL")),
+	)
+
+	eventstore.SetStorage(elasticSearch)
 
 	producer.SendMessage()
 
 	e := echo.New()
 
 	router.InitRoutes(e)
+	domain.InitBusses()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000"},
