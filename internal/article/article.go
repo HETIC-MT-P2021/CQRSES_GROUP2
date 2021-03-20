@@ -9,5 +9,5 @@ import (
 // SetArticleRoutes defines all article routes.
 func SetArticleRoutes(g *echo.Group) {
 	g.POST("/article", action.CreateArticle)
-	// g.POST("/article/:id", action.UpdateArticle)
+	g.POST("/article/:id", action.UpdateArticle)
 }

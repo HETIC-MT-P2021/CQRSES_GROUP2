@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"cqrses/internal/article/domain/entities"
-	"cqrses/internal/article/domain/model"
+	"cqrses/internal/article/domain/repository"
 	"cqrses/pkg/cqrs"
 )
 
@@ -15,11 +15,16 @@ type CreateArticleCommandMessage struct {
 }
 
 // CreateArticleCommandHandler todo
-type CreateArticleCommandHandler struct {}
+type CreateArticleCommandHandler struct {
+	repo *repository.ArticleRepository
+}
 
 // NewCreateArticleCommandHandler action a new command handler for article
 func NewCreateArticleCommandHandler() *CreateArticleCommandHandler {
-	return &CreateArticleCommandHandler{}
+	h := new(CreateArticleCommandHandler)
+	h.repo = repository.NewArticleRepository()
+
+	return h
 }
 
 // Handle handle the command
@@ -33,7 +38,7 @@ func (ach *CreateArticleCommandHandler) Handle(command cqrs.CommandMessage) (int
 			CreatedBy: cmd.ArticleData.CreatedBy,
 		}
 
-		document, err := model.StoreArticle(&article)
+		document, err := ach.repo.Create(&article)
 		if err != nil {
 			return entities.Article{}, err
 		}

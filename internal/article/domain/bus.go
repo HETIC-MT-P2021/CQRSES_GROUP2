@@ -24,6 +24,7 @@ func InitBusses() {
 // SetArticleCommands defines all article commands.
 func SetArticleCommands(cmdBus *cqrs.CommandBus) {
 	_ = cmdBus.RegisterHandler(command.NewCreateArticleCommandHandler(), &command.CreateArticleCommandMessage{})
+	_ = cmdBus.RegisterHandler(command.NewUpdateArticleCommandHandler(), &command.UpdateArticleCommandHandler{})
 }
 
 // SetArticleQueries defines all article queries.
