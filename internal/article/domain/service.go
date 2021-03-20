@@ -34,7 +34,7 @@ func (s ArticleService) Create(data entities.ArticleData) service.DomainPayload 
 		return s.NewPayload(http.StatusBadRequest, err)
 	}
 
-	commandMessage := command.ArticleCommandMessage{
+	commandMessage := command.CreateArticleCommandMessage{
 		ArticleData: data,
 	}
 
@@ -53,7 +53,7 @@ func (s ArticleService) Update(data entities.ArticleData) service.DomainPayload 
 		return s.NewPayload(http.StatusBadRequest, err)
 	}
 
-	commandMessage := command.ArticleCommandMessage{
+	commandMessage := command.CreateArticleCommandMessage{
 		ArticleData: data,
 	}
 
