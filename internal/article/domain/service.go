@@ -48,12 +48,13 @@ func (s ArticleService) Create(data entities.ArticleData) service.DomainPayload 
 	return s.NewPayload(http.StatusCreated, res)
 }
 
-func (s ArticleService) Update(data entities.ArticleData) service.DomainPayload {
+func (s ArticleService) Update(data entities.ArticleData, objectID string) service.DomainPayload {
 	if err := s.validation(data); err != nil {
 		return s.NewPayload(http.StatusBadRequest, err)
 	}
 
-	commandMessage := command.CreateArticleCommandMessage{
+	commandMessage := command.UpdateArticleCommandMessage{
+		ObjectID:    objectID,
 		ArticleData: data,
 	}
 
