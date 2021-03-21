@@ -27,6 +27,8 @@ func UpdateArticle(c echo.Context) error {
 func (u UpdateArticleAction) HandlerFunc(c echo.Context) error {
 	var articleData entities.ArticleData
 
+	objectID := c.Param("id")
+
 	if err := c.Bind(&articleData); err != nil {
 		return err
 	}
@@ -37,7 +39,7 @@ func (u UpdateArticleAction) HandlerFunc(c echo.Context) error {
 
 	articleData.CreatedBy = uint(authorID)
 
-	payload := u.Domain.Update(articleData)
+	payload := u.Domain.Update(articleData, objectID)
 
 	return u.Responder.Response(c, payload)
 }
