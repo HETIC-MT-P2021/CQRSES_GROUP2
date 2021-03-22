@@ -4,6 +4,9 @@ Here are a few guidelines to help you get on the right tracks.
 ## Code of conduct
 This project adheres to the [Contributor Covenant](https://www.contributor-covenant.org/) code of conduct. By participating in this project you agree to abide by its terms.
 
+## Pull request
+
+Use the pull request template available when you start your PR, or in [pull_request_template.md](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/blob/doc/wiki/.github/PULL_REQUEST_TEMPLATE.md)
 ## Conventional Commits 
 It is recommended to keep your changes grouped logically within individual
 commits. Many contributors find it easier to review changes that are split
