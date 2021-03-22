@@ -28,7 +28,7 @@ You can find the full documentation in the Wiki Pages :
 * [Configuration & Usage](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/1-%E2%80%A2-Configuration-&-Usage)
 * [Command line](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/2-%E2%80%A2-Command-line)
 * [Docker structure](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/3-%E2%80%A2-Docker-structure)
-* [Technical architecture](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/4-%E2%80%A2-Technical-architecture)
+* [Architecture](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/4-%E2%80%A2-Architecture)
 * [Database](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/5-%E2%80%A2-Database)
 * [CQRS & Event Sourcing](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/6-%E2%80%A2-CQRS-&-Event-Sourcing)
 * [ADR & MVC](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/7-%E2%80%A2-ADR-&-MVC)
