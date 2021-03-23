@@ -42,7 +42,7 @@ To use this app in an optimal way, docker is required.
 * [Docker](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Usage
+## Quick use
 
 Start the project with :
 
@@ -52,24 +52,6 @@ $ make compose/build compose/up
 ```
 
 You can now access the API: [http://localhost:1323/](http://localhost:1323/).
-
-### Rebuild only the service container `go`
-
-```shell
-$ make compose/rebuild/go
-```
-## Test
-
-This project has a *tests* directory containing all the test files for each controller.
-
-Simply use the test go command to run your tests :
-
-```
-$ cd tests
-$ go test
-PASS
-ok      project/tests        0.029s
-```
 ## Authors
 
 <table>
