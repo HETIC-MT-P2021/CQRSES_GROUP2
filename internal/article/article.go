@@ -10,4 +10,5 @@ import (
 func SetArticleRoutes(g *echo.Group) {
 	g.POST("/article", action.CreateArticle)
 	g.POST("/article/:id", action.UpdateArticle)
+	g.GET("/article/:id", action.SearchArticle)
 }
