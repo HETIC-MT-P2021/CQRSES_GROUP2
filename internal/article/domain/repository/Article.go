@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"cqrses/pkg/storage/datastore"
 	"sync"
 	"time"
 
@@ -23,8 +24,16 @@ func NewArticleRepository() *ArticleRepository {
 	return r
 }
 
-func (r ArticleRepository) Find() {
-	panic("implement me")
+func (r ArticleRepository) Find(objectID string) (interface{}, error) {
+	r.mux.RLock()
+	defer r.mux.RUnlock()
+
+	searchResult, err := datastore.Search(r.Name, objectID)
+	if err != nil {
+		return nil, err
+	}
+
+	return searchResult, err
 }
 
 // Create saves an article in es

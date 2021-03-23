@@ -7,9 +7,9 @@ import (
 	"cqrses/app/database/factory"
 	"cqrses/app/router"
 	"cqrses/internal/article/domain"
-	"cqrses/pkg/storage/connectors/elasticsearch"
+	"cqrses/pkg/storage/connector/elasticsearch"
+	"cqrses/pkg/storage/datastore"
 	"cqrses/pkg/storage/eventstore"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/olivere/elastic/v7"
@@ -24,14 +24,17 @@ func main() {
 	factory.Migrate()
 	factory.Seed()
 
-	eventstore.GetInstance()
+	es := eventstore.GetInstance()
 
 	elasticSearch := elasticsearch.NewConnector(
 		elastic.SetSniff(true),
 		elastic.SetURL(viper.GetString("ES_URL")),
 	)
 
-	eventstore.SetStorage(elasticSearch)
+	es.SetStorage(elasticSearch)
+
+	ds := datastore.GetInstance()
+	ds.SetStorage(elasticSearch)
 
 	e := echo.New()
 

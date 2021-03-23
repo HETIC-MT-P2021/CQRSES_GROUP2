@@ -10,7 +10,7 @@ var once sync.Once
 var es *EventStore
 
 func GetInstance() *EventStore {
-	once.Do(func() { es = New() })
+	once.Do(func() { es = new() })
 	return es
 }
 
@@ -18,14 +18,13 @@ type EventStore struct {
 	storage storage.Storage
 }
 
-// New returns an initialized EventStore instance.
-func New() *EventStore {
-	es := new(EventStore)
+// new returns an initialized EventStore instance.
+func new() *EventStore {
+	es := &EventStore{}
 
 	return es
 }
 
-func SetStorage(storage storage.Storage) { es.SetStorage(storage) }
 func (es *EventStore) SetStorage(storage storage.Storage) {
 	es.storage = storage
 }

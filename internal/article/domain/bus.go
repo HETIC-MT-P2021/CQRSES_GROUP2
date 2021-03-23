@@ -2,6 +2,7 @@ package domain
 
 import (
 	"cqrses/internal/article/domain/command"
+	"cqrses/internal/article/domain/query"
 	"cqrses/pkg/cqrs"
 )
 
@@ -29,5 +30,5 @@ func SetArticleCommands(cmdBus *cqrs.CommandBus) {
 
 // SetArticleQueries defines all article queries.
 func SetArticleQueries(queryBus *cqrs.QueryBus) {
-	// TODO
+	_ = queryBus.RegisterHandler(query.NewArticleQueryHandler(), &query.GetArticleQuery{})
 }

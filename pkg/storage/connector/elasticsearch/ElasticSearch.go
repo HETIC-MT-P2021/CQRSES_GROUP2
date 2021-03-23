@@ -89,3 +89,30 @@ func (es *ElasticSearch) Save(index string, document *storage.Document) error {
 
 	return nil
 }
+
+func (es *ElasticSearch) Search(index string, objectID string) ([]*storage.Document, error) {
+	client := es.Client
+
+	query := elastic.NewMatchQuery("object_id", objectID)
+	searchResult, err := client.Search().
+		Index(index).
+		Query(query).
+		Sort("object_version", true).
+		Pretty(true).
+		Do(es.Context)
+
+	if err != nil {
+		panic(err)
+	}
+
+	var documentList []*storage.Document
+	for _, hit := range searchResult.Hits.Hits {
+		document := &storage.Document{
+			ID:   hit.Id,
+			Body: hit.Source,
+		}
+		documentList = append(documentList, document)
+	}
+
+	return documentList, nil
+}

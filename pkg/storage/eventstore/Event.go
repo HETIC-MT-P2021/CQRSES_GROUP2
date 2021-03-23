@@ -7,12 +7,12 @@ import (
 
 // Event defines the structure of the events to be stored
 type Event struct {
-	EventName      string
-	EventType      EventTypology
-	ObjectID       string
-	ObjectVersion  storage.ObjectVersion
-	Payload        interface{}
-	EventCreatedAt time.Time
+	EventName      string                `json:"event_name"`
+	EventType      EventTypology         `json:"event_type"`
+	ObjectID       string                `json:"object_id"`
+	ObjectVersion  storage.ObjectVersion `json:"object_version"`
+	Payload        interface{}           `json:"payload"`
+	EventCreatedAt time.Time             `json:"event_created_at"`
 }
 
 // EventTypology of an event

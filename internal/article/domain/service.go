@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"cqrses/internal/article/domain/query"
 	"net/http"
 
 	"cqrses/internal/article/domain/command"
@@ -61,6 +62,21 @@ func (s ArticleService) Update(data entities.ArticleData, objectID string) servi
 	cmdDescriptor := cqrs.NewCommandMessage(&commandMessage)
 
 	res, err := CommandBus.Dispatch(cmdDescriptor)
+	if err != nil {
+		return s.NewPayload(http.StatusNotFound, err)
+	}
+
+	return s.NewPayload(http.StatusCreated, res)
+}
+
+func (s ArticleService) Search(objectID string) service.DomainPayload {
+	queryMessage := query.GetArticleQuery{
+		ObjectID: objectID,
+	}
+
+	cmdDescriptor := cqrs.NewQueryMessage(&queryMessage)
+
+	res, err := QueryBus.Dispatch(cmdDescriptor)
 	if err != nil {
 		return s.NewPayload(http.StatusNotFound, err)
 	}
