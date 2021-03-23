@@ -21,6 +21,19 @@
 	</tr>
 </table>
 
+## Wiki Documentation
+
+You can find the full documentation in the Wiki Pages :
+
+* [Configuration & Usage](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/1-%E2%80%A2-Configuration-&-Usage)
+* [Command line](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/2-%E2%80%A2-Command-line)
+* [Docker structure](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/3-%E2%80%A2-Docker-structure)
+* [Architecture](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/4-%E2%80%A2-Architecture)
+* [Database](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/5-%E2%80%A2-Database)
+* [CQRS & Event Sourcing](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/6-%E2%80%A2-CQRS-&-Event-Sourcing)
+* [ADR & MVC](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/7-%E2%80%A2-ADR-&-MVC)
+* [RabbitMQ](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/8-%E2%80%A2-RabbitMQ)
+* [Contributing](https://github.com/HETIC-MT-P2021/CQRSES_GROUP2/wiki/9-%E2%80%A2-Contributing)
 
 ## Requirement
 
@@ -29,7 +42,7 @@ To use this app in an optimal way, docker is required.
 * [Docker](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Usage
+## Quick use
 
 Start the project with :
 
@@ -39,56 +52,6 @@ $ make compose/build compose/up
 ```
 
 You can now access the API: [http://localhost:1323/](http://localhost:1323/).
-
-### Rebuild only the service container `go`
-
-```shell
-$ make compose/rebuild/go
-```
-
-## Use the command line
-
-To list available commands, either run `make` with no parameters or execute `make help`:
-
-```shell
-$ make help
-Usage: make <command>
-
-Commands:
-  compose/build                  Build all Docker images of the project
-  compose/up                     Start all containers (in the background)
-  compose/down                   Stops and deletes containers and networks created by "up".
-  compose/restart                Restarts all containers
-  compose/start                  Starts existing containers for a service
-  compose/stop                   Stops containers without removing them
-  compose/purge                  Stops and deletes containers, volumes, images (local) and networks created by "up".
-  compose/purge/all              Stops and deletes containers, volumes, images (all) and networks created by "up".
-  compose/rebuild                Rebuild the project
-  compose/rebuild/%              Rebuild a specific service ex: make compose/rebuild/<service_name>
-  compose/top                    Displays the running processes.
-  compose/monitor                Display of container(s) resource usage statistics
-  compose/monitor/follow         Display a live stream of container(s) resource usage statistics
-  compose/urls                   Get project's URL
-  go/lint                        Run golangci-lint (All-In-One config)
-```
-
-## Test
-
-This project has a *tests* directory containing all the test files for each controller.
-
-Simply use the test go command to run your tests :
-
-```
-$ cd tests
-$ go test
-PASS
-ok      project/tests        0.029s
-```
-
-## Contributing
-
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 <table>
